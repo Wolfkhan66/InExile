@@ -8,6 +8,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.util.Random;
+
 /**
  * Created by caile_000 on 14/04/2016.
  */
@@ -17,12 +19,16 @@ public class GameScreen extends ScreenAdapter implements Screen {
     int width = 640;
     OrthographicCamera camera;
     Viewport viewport;
+    public static int ran;
+    public static Random r = new Random();
+    public static Player player;
 
 
     public GameScreen(final InExileGame gam) {
         this.game = gam;
+        player = new Player();
 
-        init();
+
         camera = new OrthographicCamera();
         viewport = (new StretchViewport(width, height, camera));
         viewport.apply();
@@ -37,10 +43,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
         STOPPED
     }
 
-    public static void init(){
-
-    }
-
     private State state = State.RUN;
     @Override
     public void render(float delta) {
@@ -48,7 +50,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
 
         switch (state) {
             case RUN:
-
                 // tell the camera to update its matrices.
                 camera.update();
                 // clear the screen with a dark blue color. The
@@ -59,19 +60,54 @@ public class GameScreen extends ScreenAdapter implements Screen {
                 Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
+                while (player.health > 0){
+                    ran = r.nextInt(6 - 1 + 1) + 1 ;
+                    System.out.println("*************** DAY " + player.day + " START ***************");
+                    PrintChar();
+                    delay();
+                    Events.pickevents();
+                    delay();
+                    player.statuscheck();
+                    System.out.println("*************** DAY " + player.day + " END ***************");
+                    player.day ++;
+                    player.lvlcheck();
+                    delay();
+                }
+                death();
+
                 // tell the SpriteBatch to render in the
                 // coordinate system specified by the camera.
                 game.batch.setProjectionMatrix(camera.combined);
                 break;
-            case PAUSE:
 
+            case PAUSE:
                 break;
             case RESUME:
-
                 break;
-
             default:
                 break;
+        }
+    }
+
+    public static void PrintChar(){
+
+        System.out.println("****");
+        System.out.println("Level " + player.lvl +"    Health: " + player.health + "     Strength: " + player.strength);
+        System.out.println("Score: " + player.score+"     Gold: " + player.gold+"     XP: " + player.XP);
+        System.out.println("Medicine " + player.medicine);
+        System.out.println("   ");
+    }
+
+    public static void death(){
+        System.out.println("You are Dead.....");
+        System.exit(0);
+    }
+
+    public static void delay(){
+        try {
+            Thread.sleep(3000);                 //1000 milliseconds is one second.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
         }
     }
 
