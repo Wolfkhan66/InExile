@@ -3,11 +3,11 @@ package com.mygdx.inexile;
 /**
  * Created by caile_000 on 14/04/2016.
  */
-import java.util.Random;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.MathUtils;
 
 public class Player
 {
-    public static Random r = new Random();
     ////////////Player variables
 
     public static int maxhealth = 20;
@@ -28,29 +28,32 @@ public class Player
     ////////////inventory variables
     public static int medicine = 0;
 
-    public static void lvlcheck(){
+    public void lvlcheck(){
         if ( XP >= ( 30 * lvl))
         {
             lvl ++;
             XP = 0;
-            maxhealth +=  r.nextInt(30 - 1 + 1) + 1 ; ;
-            strength += r.nextInt(4 - 1 + 1) + 1 ; ;
+           // maxhealth +=  r.nextInt(30 - 1 + 1) + 1 ; ;
+           // strength += r.nextInt(4 - 1 + 1) + 1 ; ;
+
+            maxhealth += MathUtils.random(1, 30);
+            strength += MathUtils.random(1, 4);
 
             health = maxhealth;
 
-            System.out.println ("*** LEVEL UP ***");
+            Gdx.app.log("MyTag", "*** LEVEL UP ***");
         }
     }
 
-    public static void statuscheck(){
+    public void statuscheck(){
         if( poisoned == true &&  medicine >= 1){
-            System.out.println("You treated the poison");
+            Gdx.app.log("MyTag", "You treated the poison");
             medicine --;
             poisoned = false;
         }
         else if (poisoned == true)
         {
-            System.out.println("You are poisoned and lose 1 health");
+            Gdx.app.log("MyTag", "You are poisoned and lose 1 health");
             health --;
         }
     }

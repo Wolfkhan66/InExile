@@ -47,6 +47,18 @@ public class GameOverScreen  extends ApplicationAdapter implements Screen {
         camera.update();
         game.batch.setProjectionMatrix(camera.combined);
 
+        game.batch.begin();
+
+        game.font.draw(game.batch, "GAme over Tap anywhere to try again!", 250, 80);
+        game.batch.end();
+
+
+
+        /// if the screen is touched set the screen to the GameScreen class
+        if (Gdx.input.isTouched()) {
+            game.setScreen(new GameScreen(game));
+            dispose();
+        }
     }
 
     @Override
@@ -57,7 +69,6 @@ public class GameOverScreen  extends ApplicationAdapter implements Screen {
 
     @Override
     public void dispose () {
-
     }
 
     @Override

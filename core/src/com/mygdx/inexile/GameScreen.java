@@ -5,30 +5,26 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import java.util.Random;
 
 /**
  * Created by caile_000 on 14/04/2016.
  */
 public class GameScreen extends ScreenAdapter implements Screen {
-    final InExileGame game;
+    static InExileGame game;
     int height = 480;
     int width = 640;
     OrthographicCamera camera;
     Viewport viewport;
     public static int ran;
-    public static Random r = new Random();
     public static Player player;
 
 
     public GameScreen(final InExileGame gam) {
         this.game = gam;
         player = new Player();
-
-
         camera = new OrthographicCamera();
         viewport = (new StretchViewport(width, height, camera));
         viewport.apply();
@@ -61,14 +57,16 @@ public class GameScreen extends ScreenAdapter implements Screen {
 
 
                 while (player.health > 0){
-                    ran = r.nextInt(6 - 1 + 1) + 1 ;
-                    System.out.println("*************** DAY " + player.day + " START ***************");
+                //    ran = r.nextInt(6 - 1 + 1) + 1 ;
+
+                    ran = MathUtils.random(1,6);
+                    Gdx.app.log("MyTag", "*************** DAY " + player.day + " START ***************");
                     PrintChar();
                     delay();
                     Events.pickevents();
                     delay();
                     player.statuscheck();
-                    System.out.println("*************** DAY " + player.day + " END ***************");
+                    Gdx.app.log("MyTag", "*************** DAY " + player.day + " END ***************");
                     player.day ++;
                     player.lvlcheck();
                     delay();
@@ -91,24 +89,25 @@ public class GameScreen extends ScreenAdapter implements Screen {
 
     public static void PrintChar(){
 
-        System.out.println("****");
-        System.out.println("Level " + player.lvl +"    Health: " + player.health + "     Strength: " + player.strength);
-        System.out.println("Score: " + player.score+"     Gold: " + player.gold+"     XP: " + player.XP);
-        System.out.println("Medicine " + player.medicine);
-        System.out.println("   ");
+        Gdx.app.log("MyTag", "****");
+        Gdx.app.log("MyTag", "Level " + player.lvl + "    Health: " + player.health + "     Strength: " + player.strength);
+        Gdx.app.log("MyTag", "Score: " + player.score + "     Gold: " + player.gold + "     XP: " + player.XP);
+        Gdx.app.log("MyTag", "Medicine " + player.medicine);
+        Gdx.app.log("MyTag", "   ");
     }
 
     public static void death(){
-        System.out.println("You are Dead.....");
-        System.exit(0);
+        Gdx.app.log("MyTag", "You are Dead.....");
+        delay();
+        game.setScreen(new GameOverScreen(game));
+      //  dispose();
     }
 
     public static void delay(){
-        try {
-            Thread.sleep(3000);                 //1000 milliseconds is one second.
-        } catch(InterruptedException ex) {
-            Thread.currentThread().interrupt();
-        }
+
+      //  long delaystart = TimeUtils.nanoTime();
+
+      //  while(TimeUtils.nanoTime() - delaystart < 1000000000);
     }
 
         /// resize the viewport, camera and stage. VERY VERY IMPORTANT FOR SCALING ON DIFFERENT DEVICES
