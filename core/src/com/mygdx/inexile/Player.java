@@ -3,48 +3,61 @@ package com.mygdx.inexile;
 /**
  * Created by caile_000 on 14/04/2016.
  */
+/**
+ *
+ * @author (cai lehwald)
+ * @version (1)
+ */
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 
 public class Player
 {
     ////////////Player variables
-
-    public static int maxhealth = 20;
-    public static int health = maxhealth;
-    public static int strength = 2;
-    public static int score;
-    public static int day = 1;
-    public static int gold;
-    public static int XP;
-    public static int lvl = 1;
+    public int maxhealth;
+    public int health;
+    public int strength;
+    public int score;
+    public int day;
+    public int gold;
+    public int XP;
+    public int lvl;
 
     ////////////Status Variables
-    public static boolean poisoned = false;
-    public static boolean hungry = false;
-    public static boolean dehydrayted = false;
-    public static boolean burnt = false;
+    public boolean poisoned ;
 
     ////////////inventory variables
-    public static int medicine = 0;
+    public int medicine;
 
+    // Player Constructor. This is called every time a new Player object is created.
+    public Player(){
+        maxhealth = 20;
+        health = maxhealth;
+        strength = 2;
+        score = 0;
+        day = 1;
+        gold = 0;
+        XP = 0;
+        lvl = 1;
+        poisoned = false;
+        medicine = 0;
+    }
+
+    // Here we check the players XP and decide if to level up.
     public void lvlcheck(){
         if ( XP >= ( 30 * lvl))
         {
             lvl ++;
             XP = 0;
-           // maxhealth +=  r.nextInt(30 - 1 + 1) + 1 ; ;
-           // strength += r.nextInt(4 - 1 + 1) + 1 ; ;
-
             maxhealth += MathUtils.random(1, 30);
             strength += MathUtils.random(1, 4);
-
             health = maxhealth;
-
             Gdx.app.log("MyTag", "*** LEVEL UP ***");
         }
     }
 
+    // Check the players status for status effects.
     public void statuscheck(){
         if( poisoned == true &&  medicine >= 1){
             Gdx.app.log("MyTag", "You treated the poison");
