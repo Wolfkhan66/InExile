@@ -22,8 +22,8 @@ public class GameOverScreen  extends ApplicationAdapter implements Screen {
     final InExileGame game;
     OrthographicCamera camera;
     Viewport viewport;
-    int width = 640;
-    int height = 480;
+    int width = 480;
+    int height = 640;
 
     public GameOverScreen(final InExileGame gam){
         game = gam;

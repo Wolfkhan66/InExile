@@ -27,8 +27,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class GameScreen extends ScreenAdapter implements Screen {
     final InExileGame game;
-    int height = 480;
-    int width = 640;
+    int height = 640;
+    int width = 480;
     OrthographicCamera camera;
     Viewport viewport;
     public static Player player;

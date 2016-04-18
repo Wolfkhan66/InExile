@@ -21,8 +21,8 @@ public class MainMenuScreen implements Screen {
     final InExileGame game;
     OrthographicCamera camera;
     Viewport viewport;
-    int width = 640;
-    int height = 480;
+    int width = 480;
+    int height = 640;
 
     public MainMenuScreen(final InExileGame gam) {
         game = gam;
@@ -45,7 +45,7 @@ public class MainMenuScreen implements Screen {
 
         game.batch.begin();
 
-        game.font.draw(game.batch, "Tap anywhere to begin!", 250, 80);
+        game.font.draw(game.batch, "Tap anywhere to begin!",camera.viewportWidth / 2, camera.viewportHeight / 2);
         game.batch.end();
 
 
