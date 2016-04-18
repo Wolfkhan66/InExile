@@ -18,10 +18,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
@@ -35,11 +39,17 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public static Events events;
     public static Battle battle;
 
+
     private SpriteBatch batch;
     private Skin skin;
     private Stage stage;
 
+    Dialog dialog;
+
     public static Label LOG;
+    public static Label gamelog;
+
+    public ScrollPane scroller;
 
     public GameScreen(final InExileGame gam) {
         this.game = gam;
@@ -59,6 +69,27 @@ public class GameScreen extends ScreenAdapter implements Screen {
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         stage = new Stage();
 
+        gamelog = new Label("Start", skin);
+        gamelog.setAlignment(Align.center);
+        gamelog.setWrap(true);
+
+        Table scrollTable = new Table();
+        scrollTable.add(gamelog);
+        scrollTable.row();
+
+        scroller = new ScrollPane(scrollTable);
+
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.add(scroller).fill().expand();
+        table.setBounds(0, -200, 0, 0);
+        scroller.debug();
+        table.debug();
+
+
+        this.stage.addActor(table);
+
         final TextButton button = new TextButton("click me" , skin , "default");
         LOG = new Label("test ", skin, "default");
 
@@ -69,16 +100,27 @@ public class GameScreen extends ScreenAdapter implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.log("MyTag", "*************** DAY " + player.day + " START ***************");
+                gamelog.setText(gamelog.getText() + "\n*************** DAY " + player.day + " START ***************");
                 PrintChar();
                 events.pickevents();
                 player.statuscheck();
                 Gdx.app.log("MyTag", "*************** DAY " + player.day + " END ***************");
+                gamelog.setText(gamelog.getText() + "\n*************** DAY " + player.day + " END ***************");
                 player.day++;
                 player.lvlcheck();
             }
         });
+/*
+        dialog = new Dialog("End Game", skin);
 
-        stage.addActor(LOG);
+        dialog.button("Continue", 1L);
+        dialog.text("hello world");
+        dialog.show(stage, null);
+        dialog.setBounds(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight()/2, 200, 300);
+
+        stage.addActor(dialog);
+        */
+       // stage.addActor(LOG);
         stage.addActor(button);
         Gdx.input.setInputProcessor(stage);
     }
@@ -88,6 +130,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
         if (player.health <= 0) {
             death();
         }
+        scroller.fling(1,0,-30);
     }
 
     @Override
@@ -99,12 +142,18 @@ public class GameScreen extends ScreenAdapter implements Screen {
         // blue and alpha component in the range [0,1]
         // of the color to be used to clear the screen.
         Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+
+        this.stage.act();
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        update();
+        this.stage.draw();
 
+        update();
+        stage.act();
         if (player.health <= 0) {
             Gdx.app.log("MyTag", "You are Dead.....");
+            gamelog.setText(gamelog.getText() + "\nYou are Dead.....");
             death();
         }
 
@@ -123,6 +172,14 @@ public class GameScreen extends ScreenAdapter implements Screen {
         Gdx.app.log("MyTag", "Score: " + player.score + "     Gold: " + player.gold + "     XP: " + player.XP);
         Gdx.app.log("MyTag", "Medicine " + player.medicine);
         Gdx.app.log("MyTag", "   ");
+
+/*
+        gamelog.setText(gamelog.getText() + "\n****");
+        gamelog.setText(gamelog.getText() + "\nLevel " + player.lvl + "    Health: " + player.health + "     Strength: " + player.strength);
+        gamelog.setText(gamelog.getText() + "\nScore: " + player.score + "     Gold: " + player.gold + "     XP: " + player.XP);
+        gamelog.setText(gamelog.getText() + "\nMedicine " + player.medicine);
+        gamelog.setText(gamelog.getText() + "\n   ");
+        */
     }
 
     public void death() {
@@ -150,6 +207,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
     // to play whereever you are in the application
     @Override
     public void dispose() {
+        stage.dispose();
     }
 
     public static Player getPlayer() {

@@ -34,6 +34,10 @@ public class Battle{
         Gdx.app.log("MyTag", "Level " + player.lvl + "    Health: " + player.health + "     Strength: " + player.strength);
         Gdx.app.log("MyTag", "   ");
 
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n*************** BATTLE START ***************");
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nLevel " + player.lvl + "    Health: " + player.health + "     Strength: " + player.strength);
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n   ");
+
         if( type == 1)
         {
             Gdx.app.log("MyTag", "The cursed rat attacks !!!");
@@ -41,6 +45,7 @@ public class Battle{
             enemyAT = 2 * player.lvl;
             enemyXP = 5;
             EnemyName = "Rat";
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nThe cursed rat attacks !!!");
         }
         else if( type == 2)
         {
@@ -49,6 +54,7 @@ public class Battle{
             enemyAT = 5  * player.lvl;
             enemyXP = 10;
             EnemyName = "Bandit";
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nA Bandit approaches");
         }
         else if( type == 3)
         {
@@ -57,15 +63,22 @@ public class Battle{
             enemyAT = 10 * player.lvl;
             enemyXP = 40;
             EnemyName = "Sir Mingi & Mongi";
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nSir Mingi & Mongi");
         }
         Gdx.app.log("MyTag", "EnemyHP: " + enemyHP);
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nEnemyHP: " + enemyHP);
 
         while (player.health > 0 ){
             Gdx.app.log("MyTag", "*************** TURN " + battleturn + " START ***************");
             Gdx.app.log("MyTag", "Health: " + player.health);
             Gdx.app.log("MyTag", "EnemyHP: " + enemyHP);
-
             Gdx.app.log("MyTag", "");
+
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n*************** TURN " + battleturn + " START ***************");
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nHealth: " + player.health);
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nEnemyHP: " + enemyHP);
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n");
+
             PlayerMove(EnemyName);
             player.statuscheck();
 
@@ -76,6 +89,9 @@ public class Battle{
                // Player.gold += r.nextInt(10 - 1 + 1) + 1 ;
                 player.gold += MathUtils.random(1,10);
                 Gdx.app.log("MyTag", "*************** BATTLE END ***************");
+
+                GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou defeated the enemy!!!");
+                GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n*************** BATTLE END ***************");
                 break;
             }
             else{
@@ -83,6 +99,11 @@ public class Battle{
                 Gdx.app.log("MyTag", "");
                 Gdx.app.log("MyTag", "*************** TURN " + battleturn + " END ***************");
                 Gdx.app.log("MyTag", "");
+
+                GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n");
+                GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n*************** TURN " + battleturn + " END ***************");
+                GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n");
+
                 battleturn ++;
             }
         }
@@ -94,21 +115,27 @@ public class Battle{
         if ( ran == 1 ){
             Gdx.app.log("MyTag", "You hit " + EnemyName + " for " + player.strength + " damage");
             enemyHP -= 2;
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou hit " + EnemyName + " for " + player.strength + " damage");
         }
         else if ( ran == 2 ){
             Gdx.app.log("MyTag", "You miss");
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou miss");
         }
         else if ( ran == 3){
             Gdx.app.log("MyTag", "A woodland critter helps you..");
             ran = MathUtils.random(1,5);
-            Gdx.app.log("MyTag", EnemyName + " takes" + ran + " damage");
+            Gdx.app.log("MyTag", EnemyName + " takes " + ran + " damage");
             enemyHP -= ran;
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nA woodland critter helps you..");
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n"+  EnemyName + " takes " + ran + " damage");
         }
         else if (ran == 4){
             Gdx.app.log("MyTag", "You deal a critical hit");
            ran =  MathUtils.random(player.strength,player.strength * 2);
             Gdx.app.log("MyTag", EnemyName + " takes " + ran + " damage");
             enemyHP -= ran;
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou deal a critical hit");
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n" + EnemyName + " takes " + ran + " damage");
         }
     }
 
@@ -118,19 +145,24 @@ public class Battle{
         if ( ran == 1 ){
             Gdx.app.log("MyTag", EnemyName + " Hits you for " + enemyAT + " damage");
             player.health -= enemyAT;
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n" + EnemyName + " Hits you for " + enemyAT + " damage");
         }
         else if (ran == 2){
             Gdx.app.log("MyTag", "You Dodge and counter for " + player.strength + " damage");
             enemyHP -= 2;
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou Dodge and counter for " + player.strength + " damage");
         }
         else if (ran == 3){
             Gdx.app.log("MyTag", "You Dodge " + EnemyName + "'s attack");
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou Dodge " + EnemyName + "'s attack");
         }
         else if ( ran == 4){
             Gdx.app.log("MyTag", EnemyName + " performs critical hit");
             ran = MathUtils.random(enemyAT,enemyAT * 2);
             Gdx.app.log("MyTag", "You take " + ran + " damage");
             player.health -= ran;
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n"+EnemyName + " performs critical hit");
+            GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou take " + ran + " damage");
         }
     }
 }
