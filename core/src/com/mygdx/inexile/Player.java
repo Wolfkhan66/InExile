@@ -4,6 +4,7 @@ package com.mygdx.inexile;
  * Created by caile_000 on 14/04/2016.
  */
 /**
+ * Handles the Player Object
  *
  * @author (cai lehwald)
  * @version (1)

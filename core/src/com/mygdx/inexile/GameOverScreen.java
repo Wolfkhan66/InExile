@@ -3,6 +3,12 @@ package com.mygdx.inexile;
 /**
  * Created by caile_000 on 14/04/2016.
  */
+/**
+ * Display the Game Over Screen
+ *
+ * @author (cai lehwald)
+ * @version (1)
+ */
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -16,27 +22,15 @@ public class GameOverScreen  extends ApplicationAdapter implements Screen {
     final InExileGame game;
     OrthographicCamera camera;
     Viewport viewport;
-
     int width = 640;
     int height = 480;
 
-
     public GameOverScreen(final InExileGame gam){
         game = gam;
-
-        init();
-
         camera = new OrthographicCamera();
         viewport = (new StretchViewport(width, height, camera));
         viewport.apply();
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
-
-    }
-
-
-    public void init(){
-
-
     }
 
     @Override
@@ -48,11 +42,8 @@ public class GameOverScreen  extends ApplicationAdapter implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
 
         game.batch.begin();
-
-        game.font.draw(game.batch, "GAme over Tap anywhere to try again!", 250, 80);
+        game.font.draw(game.batch, "Game over Tap anywhere to try again!", 250, 80);
         game.batch.end();
-
-
 
         /// if the screen is touched set the screen to the GameScreen class
         if (Gdx.input.isTouched()) {
