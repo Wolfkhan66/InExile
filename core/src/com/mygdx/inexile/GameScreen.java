@@ -38,18 +38,13 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public static Player player;
     public static Events events;
     public static Battle battle;
-
-
     private SpriteBatch batch;
     private Skin skin;
     private Stage stage;
-
     Dialog dialog;
-
-    public static Label LOG;
     public static Label gamelog;
-
     public ScrollPane scroller;
+
 
     public GameScreen(final InExileGame gam) {
         this.game = gam;
@@ -67,7 +62,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public void create() {
         batch = new SpriteBatch();
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
-        stage = new Stage();
+        stage = new Stage(new StretchViewport(width, height)); Gdx.input.setInputProcessor(stage);
 
         gamelog = new Label("Start", skin);
         gamelog.setAlignment(Align.center);
@@ -89,11 +84,8 @@ public class GameScreen extends ScreenAdapter implements Screen {
 
         stage.addActor(table);
 
-        final TextButton button = new TextButton("click me" , skin , "default");
-        LOG = new Label("test ", skin, "default");
-
-        button.setBounds(Gdx.graphics.getWidth() / 2 - 50, Gdx.graphics.getHeight() / 2 - 50, 200, 20);
-        LOG.setBounds(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight() / 2, 200, 20);
+        final TextButton button = new TextButton("Continue" , skin , "default");
+        button.setBounds(270, 210, 200, 20);
 
         button.addListener(new ClickListener() {
             @Override
@@ -119,7 +111,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
         stage.addActor(dialog);
         */
 
-        stage.addActor(LOG);
         stage.addActor(button);
         Gdx.input.setInputProcessor(stage);
     }
@@ -156,6 +147,19 @@ public class GameScreen extends ScreenAdapter implements Screen {
             death();
         }
 
+        game.batch.begin();
+        game.font.draw(game.batch, "Health: " + player.health, 17, 620);
+        game.font.draw(game.batch, "Strength: " + player.strength, 17, 600);
+        game.font.draw(game.batch, "Level: " + player.lvl, 17, 580);
+        game.font.draw(game.batch, "XP: " + player.XP, 17, 560);
+
+        game.font.draw(game.batch, "Gold: " + player.gold, 17, 500);
+        game.font.draw(game.batch, "Medicine: " + player.medicine, 17, 480);
+
+        game.font.draw(game.batch, "Score: " + player.score, 400, 620);
+        game.font.draw(game.batch, "Day: " + player.day, 400, 600);
+        game.batch.end();
+
         batch.begin();
         stage.draw();
         batch.end();
@@ -171,14 +175,6 @@ public class GameScreen extends ScreenAdapter implements Screen {
         Gdx.app.log("MyTag", "Score: " + player.score + "     Gold: " + player.gold + "     XP: " + player.XP);
         Gdx.app.log("MyTag", "Medicine " + player.medicine);
         Gdx.app.log("MyTag", "   ");
-
-/*
-        gamelog.setText(gamelog.getText() + "\n****");
-        gamelog.setText(gamelog.getText() + "\nLevel " + player.lvl + "    Health: " + player.health + "     Strength: " + player.strength);
-        gamelog.setText(gamelog.getText() + "\nScore: " + player.score + "     Gold: " + player.gold + "     XP: " + player.XP);
-        gamelog.setText(gamelog.getText() + "\nMedicine " + player.medicine);
-        gamelog.setText(gamelog.getText() + "\n   ");
-        */
     }
 
     public void death() {
@@ -191,6 +187,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
     public void resize(int width, int height) {
         viewport.update(width, height);
         camera.position.set(camera.viewportWidth / 2, camera.viewportHeight / 2, 0);
+        stage.getViewport().update(width, height);
     }
 
     @Override

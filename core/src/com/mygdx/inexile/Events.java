@@ -27,8 +27,6 @@ public class Events
 
     public void pickevents()
     {
-        GameScreen.LOG.setText("Event picked");
-        GameScreen.LOG.debug();
         ran = MathUtils.random(1, 6);
         Gdx.app.log("MyTag", "*************** EVENT ***************");
         GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n*************** EVENT ***************");
@@ -52,7 +50,6 @@ public class Events
         ran  = MathUtils.random(1, 10);
         ////////////////////////////////////////// 1 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         if ( ran >= 1 && ran <= 2 ){
-            GameScreen.LOG.setText("You feel lucky ");
             GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou feel lucky");
 
                     Gdx.app.log("MyTag", "Score + 15");
