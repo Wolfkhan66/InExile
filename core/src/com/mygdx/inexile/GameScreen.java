@@ -79,16 +79,15 @@ public class GameScreen extends ScreenAdapter implements Screen {
 
         scroller = new ScrollPane(scrollTable);
 
-
         Table table = new Table();
-        table.setFillParent(true);
+        table.setBounds(10, 10, 460, 200);
         table.add(scroller).fill().expand();
-        table.setBounds(0, -200, 0, 0);
+
+        scrollTable.debug();
         scroller.debug();
         table.debug();
 
-
-        this.stage.addActor(table);
+        stage.addActor(table);
 
         final TextButton button = new TextButton("click me" , skin , "default");
         LOG = new Label("test ", skin, "default");
@@ -110,17 +109,17 @@ public class GameScreen extends ScreenAdapter implements Screen {
                 player.lvlcheck();
             }
         });
-/*
-        dialog = new Dialog("End Game", skin);
 
+        /*
+        dialog = new Dialog("End Game", skin);
         dialog.button("Continue", 1L);
         dialog.text("hello world");
         dialog.show(stage, null);
         dialog.setBounds(Gdx.graphics.getWidth() / 2, Gdx.graphics.getHeight()/2, 200, 300);
-
         stage.addActor(dialog);
         */
-       // stage.addActor(LOG);
+
+        stage.addActor(LOG);
         stage.addActor(button);
         Gdx.input.setInputProcessor(stage);
     }
@@ -207,7 +206,7 @@ public class GameScreen extends ScreenAdapter implements Screen {
     // to play whereever you are in the application
     @Override
     public void dispose() {
-        stage.dispose();
+    //    stage.dispose();
     }
 
     public static Player getPlayer() {
