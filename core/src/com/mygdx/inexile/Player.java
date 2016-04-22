@@ -24,6 +24,7 @@ public class Player
     public int gold;
     public int XP;
     public int lvl;
+    public int ran;
 
     ////////////Status Variables
     public boolean poisoned ;
@@ -69,6 +70,36 @@ public class Player
         {
             Gdx.app.log("MyTag", "You are poisoned and lose 1 health");
             health --;
+        }
+
+        public void attack(){
+    ran = MathUtils.random(1,4);
+
+    if ( ran == 1 ){
+        Gdx.app.log("MyTag", "You hit " + EnemyName + " for " + player.strength + " damage");
+        enemyHP -= 2;
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou hit " + EnemyName + " for " + player.strength + " damage");
+    }
+    else if ( ran == 2 ){
+        Gdx.app.log("MyTag", "You miss");
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou miss");
+    }
+    else if ( ran == 3){
+        Gdx.app.log("MyTag", "A woodland critter helps you..");
+        ran = MathUtils.random(1,5);
+        Gdx.app.log("MyTag", EnemyName + " takes " + ran + " damage");
+        enemyHP -= ran;
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nA woodland critter helps you..");
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n"+  EnemyName + " takes " + ran + " damage");
+    }
+    else if (ran == 4){
+        Gdx.app.log("MyTag", "You deal a critical hit");
+        ran =  MathUtils.random(player.strength,player.strength * 2);
+        Gdx.app.log("MyTag", EnemyName + " takes " + ran + " damage");
+        enemyHP -= ran;
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou deal a critical hit");
+        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n" + EnemyName + " takes " + ran + " damage");
+    }
         }
     }
 }

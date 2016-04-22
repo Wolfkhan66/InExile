@@ -13,7 +13,7 @@ package com.mygdx.inexile;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 
-public class Battle{
+public class Battle {
 
     ////////////Battle Variables
     public static int ran;
@@ -24,7 +24,7 @@ public class Battle{
     public static String EnemyName;
     public static Player player;
 
-    public Battle( ){
+    public  Battle( ){
         player = GameScreen.getPlayer();
     }
 
