@@ -28,15 +28,16 @@ public class Player
 
     ////////////Status Variables
     public boolean poisoned ;
+    public boolean combat;
 
     ////////////inventory variables
     public int medicine;
 
     // Player Constructor. This is called every time a new Player object is created.
     public Player(){
-        maxhealth = 20;
+        maxhealth = 60;
         health = maxhealth;
-        strength = 2;
+        strength = 4;
         score = 0;
         day = 1;
         gold = 0;
@@ -44,6 +45,7 @@ public class Player
         lvl = 1;
         poisoned = false;
         medicine = 0;
+        combat = false;
     }
 
     // Here we check the players XP and decide if to level up.
@@ -60,47 +62,17 @@ public class Player
     }
 
     // Check the players status for status effects.
-    public void statuscheck(){
-        if( poisoned == true &&  medicine >= 1){
+    public void statuscheck() {
+        if (poisoned == true && medicine >= 1) {
             Gdx.app.log("MyTag", "You treated the poison");
-            medicine --;
+            medicine--;
             poisoned = false;
-        }
-        else if (poisoned == true)
-        {
+        } else if (poisoned == true) {
             Gdx.app.log("MyTag", "You are poisoned and lose 1 health");
-            health --;
-        }
-
-        public void attack(){
-    ran = MathUtils.random(1,4);
-
-    if ( ran == 1 ){
-        Gdx.app.log("MyTag", "You hit " + EnemyName + " for " + player.strength + " damage");
-        enemyHP -= 2;
-        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou hit " + EnemyName + " for " + player.strength + " damage");
-    }
-    else if ( ran == 2 ){
-        Gdx.app.log("MyTag", "You miss");
-        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou miss");
-    }
-    else if ( ran == 3){
-        Gdx.app.log("MyTag", "A woodland critter helps you..");
-        ran = MathUtils.random(1,5);
-        Gdx.app.log("MyTag", EnemyName + " takes " + ran + " damage");
-        enemyHP -= ran;
-        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nA woodland critter helps you..");
-        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n"+  EnemyName + " takes " + ran + " damage");
-    }
-    else if (ran == 4){
-        Gdx.app.log("MyTag", "You deal a critical hit");
-        ran =  MathUtils.random(player.strength,player.strength * 2);
-        Gdx.app.log("MyTag", EnemyName + " takes " + ran + " damage");
-        enemyHP -= ran;
-        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou deal a critical hit");
-        GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\n" + EnemyName + " takes " + ran + " damage");
-    }
+            health--;
         }
     }
+
 }
+
 

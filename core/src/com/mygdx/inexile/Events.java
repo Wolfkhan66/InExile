@@ -178,13 +178,13 @@ public class Events
         if ( ran >= 1 && ran <= 5 ){
             Gdx.app.log("MyTag", "You encounter a rat");
             GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou encounter a rat");
-                    battle.Combat(1);
+                    battle.CreateNewBattle(1);
         }
         ////////////////////////////////////////// 2 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         else if ( ran >= 6 && ran <= 10 && player.lvl >= 2){
             Gdx.app.log("MyTag", "You encounter a Bandit");
             GameScreen.gamelog.setText(GameScreen.gamelog.getText() + "\nYou encounter a Bandit");
-            battle.Combat(2);
+            battle.CreateNewBattle(2);
 
         }
         ////////////////////////////////////////// 3 \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\

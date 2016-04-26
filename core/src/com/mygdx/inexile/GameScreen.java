@@ -90,15 +90,19 @@ public class GameScreen extends ScreenAdapter implements Screen {
         button.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.log("MyTag", "*************** DAY " + player.day + " START ***************");
-                gamelog.setText(gamelog.getText() + "\n*************** DAY " + player.day + " START ***************");
-                PrintChar();
-                events.pickevents();
-                player.statuscheck();
-                Gdx.app.log("MyTag", "*************** DAY " + player.day + " END ***************");
-                gamelog.setText(gamelog.getText() + "\n*************** DAY " + player.day + " END ***************");
-                player.day++;
-                player.lvlcheck();
+                if (player.combat) {
+                    battle.Combat();
+                } else {
+                    Gdx.app.log("MyTag", "*************** DAY " + player.day + " START ***************");
+                    gamelog.setText(gamelog.getText() + "\n*************** DAY " + player.day + " START ***************");
+                    PrintChar();
+                    events.pickevents();
+                    player.statuscheck();
+                    Gdx.app.log("MyTag", "*************** DAY " + player.day + " END ***************");
+                    gamelog.setText(gamelog.getText() + "\n*************** DAY " + player.day + " END ***************");
+                    player.day++;
+                    player.lvlcheck();
+                }
             }
         });
 
